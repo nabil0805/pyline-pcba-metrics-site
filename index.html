@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pyline Solutions | PCBA Metrics Software</title>
+  <meta
+    name="description"
+    content="Pyline Solutions provides PCBA metrics software for live line monitoring, runtime analysis, rejection tracking, yield improvement, and reporting."
+  />
+  <style>
+    :root {
+      --bg: #07111d;
+      --bg2: #0c1a2b;
+      --panel: rgba(13, 28, 47, 0.92);
+      --panel2: rgba(18, 38, 64, 0.96);
+      --text: #eef4ff;
+      --muted: #a9b7d1;
+      --line: rgba(255, 255, 255, 0.08);
+      --cyan: #34c6ff;
+      --blue: #7284ff;
+      --green: #31d8a4;
+      --yellow: #ffca63;
+      --red: #ff8578;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(52, 198, 255, 0.14), transparent 24%),
+        radial-gradient(circle at 90% 20%, rgba(114, 132, 255, 0.14), transparent 22%),
+        linear-gradient(180deg, #06101b 0%, #081321 55%, #091625 100%);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
+
+    .bg {
+      position: fixed;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(90px);
+      z-index: -1;
+      opacity: 0.22;
+      pointer-events: none;
+    }
+
+    .bg.one { top: 60px; left: -100px; background: var(--cyan); }
+    .bg.two { top: 460px; right: -100px; background: var(--blue); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(7, 17, 29, 0.78);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-weight: 800;
+      color: #06111b;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      box-shadow: 0 12px 28px rgba(52, 198, 255, 0.22);
+    }
+
+    .brand-text strong,
+    .brand-text small {
+      display: block;
+    }
+
+    .brand-text small {
+      color: var(--muted);
+      margin-top: 2px;
+      font-size: 0.78rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .hero {
+      padding: 80px 0 34px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    h1, h2, h3 { margin-top: 0; }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      line-height: 1.03;
+      margin-bottom: 16px;
+      max-width: 11ch;
+    }
+
+    p, li {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .hero-tags,
+    .hero-actions,
+    .cta-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-tags { margin-top: 24px; }
+    .hero-tags span {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: #dfeafd;
+      font-size: 0.92rem;
+    }
+
+    .hero-actions { margin-top: 28px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #06111b;
+      box-shadow: 0 14px 30px rgba(52, 198, 255, 0.2);
+    }
+
+    .btn.alt {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .panel,
+    .card,
+    .strip-card,
+    .cta-box {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--panel2), var(--panel));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel {
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(52, 198, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(52, 198, 255, 0.05) 1px, transparent 1px);
+      background-size: 38px 38px;
+      pointer-events: none;
+    }
+
+    .window {
+      position: relative;
+      z-index: 1;
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(4, 11, 20, 0.52);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .window-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: #dce8fb;
+      font-size: 0.9rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .red { background: var(--red); }
+    .yellow { background: var(--yellow); }
+    .green { background: var(--green); }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .metric {
+      padding: 15px;
+      border-radius: 16px;
+      background: rgba(17, 35, 58, 0.95);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .metric small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .metric span {
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .ok { color: var(--green); }
+    .live { color: var(--cyan); }
+    .warn { color: var(--yellow); }
+
+    .section { padding: 64px 0; }
+
+    .section.alt {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 28px;
+    }
+
+    .strip {
+      padding: 18px 0 12px;
+    }
+
+    .strip-grid,
+    .four-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .two-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .strip-card,
+    .card {
+      padding: 24px;
+    }
+
+    .visual {
+      width: 100%;
+      margin-bottom: 18px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(6, 12, 20, 0.4);
+    }
+
+    .feature-list {
+      margin: 16px 0 0;
+      padding-left: 18px;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      font-weight: 800;
+      color: var(--cyan);
+      background: linear-gradient(135deg, rgba(52, 198, 255, 0.16), rgba(114, 132, 255, 0.16));
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      padding: 22px 22px 22px 24px;
+      border-left: 3px solid var(--cyan);
+      border-radius: 0 16px 16px 0;
+      background: linear-gradient(180deg, rgba(18, 34, 57, 0.76), rgba(10, 20, 36, 0.86));
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .note {
+      background: linear-gradient(180deg, rgba(52, 198, 255, 0.1), rgba(12, 24, 42, 0.92));
+    }
+
+    .cta-box {
+      padding: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      background:
+        radial-gradient(circle at top right, rgba(52, 198, 255, 0.12), transparent 24%),
+        linear-gradient(180deg, rgba(19, 36, 60, 0.95), rgba(10, 20, 36, 0.95));
+    }
+
+    footer {
+      padding: 24px 0 36px;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1080px) {
+      .strip-grid, .four-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid, .two-grid, .about-grid, .cta-box { grid-template-columns: 1fr; display: grid; }
+      .metric-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .nav { flex-direction: column; align-items: flex-start; padding: 14px 0; }
+      .strip-grid, .four-grid { grid-template-columns: 1fr; }
+      .strip-card, .card, .cta-box { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg one"></div>
+  <div class="bg two"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <span class="brand-mark">P</span>
+        <span class="brand-text">
+          <strong>Pyline Solutions</strong>
+          <small>UK-based PCBA Metrics Software</small>
+        </span>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#benefits">Benefits</a></li>
+          <li><a href="#use-cases">Use Cases</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact" class="btn">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">PCBA Metrics Visibility</p>
+          <h1>Make production performance visible across every PCBA line.</h1>
+          <p>
+            Pyline Solutions provides software for live line monitoring, historical board
+            runtime review, rejection analysis, yield improvement, scrap reduction, and
+            audit-ready operational insight.
+          </p>
+
+          <div class="hero-tags">
+            <span>Live runtime tracking</span>
+            <span>Historical board runs</span>
+            <span>Rejection analytics</span>
+            <span>Yield and scrap visibility</span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#products" class="btn">Explore Products</a>
+            <a href="#contact" class="btn alt">Request Information</a>
+          </div>
+        </div>
+
+        <div class="panel hero-panel">
+          <div class="window">
+            <div class="window-top">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span style="margin-left:8px;">Proline Live Dashboard</span>
+            </div>
+
+            <div class="metric-row">
+              <div class="metric">
+                <small>Lines Active</small>
+                <strong>08 / 10</strong>
+                <span class="ok">+2 today</span>
+              </div>
+              <div class="metric">
+                <small>Avg Board Runtime</small>
+                <strong>42.6s</strong>
+                <span class="live">Live</span>
+              </div>
+              <div class="metric">
+                <small>Reject Cost</small>
+                <strong>£4,280</strong>
+                <span class="warn">Tracked</span>
+              </div>
+            </div>
+
+            <svg viewBox="0 0 760 420" aria-label="Dashboard image">
+              <rect x="0" y="0" width="760" height="420" rx="22" fill="#091523" stroke="#17304C" />
+              <text x="28" y="42" fill="#EAF3FF" font-size="24" font-weight="700">Board Runtime Trend</text>
+              <text x="28" y="68" fill="#9DB0CA" font-size="14">Live + historical comparison</text>
+
+              <line x1="28" y1="118" x2="732" y2="118" stroke="#17304C"/>
+              <line x1="28" y1="176" x2="732" y2="176" stroke="#17304C"/>
+              <line x1="28" y1="234" x2="732" y2="234" stroke="#17304C"/>
+              <line x1="28" y1="292" x2="732" y2="292" stroke="#17304C"/>
+              <line x1="28" y1="350" x2="732" y2="350" stroke="#17304C"/>
+
+              <polyline
+                points="40,312 110,298 180,270 250,252 320,205 390,220 460,175 530,155 600,116 690,92"
+                fill="none"
+                stroke="#34C6FF"
+                stroke-width="7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <polyline
+                points="40,332 110,324 180,302 250,289 320,254 390,264 460,226 530,215 600,184 690,162"
+                fill="none"
+                stroke="#7284FF"
+                stroke-width="6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                opacity="0.82"
+              />
+
+              <circle cx="250" cy="252" r="7" fill="#31D8A4"/>
+              <circle cx="530" cy="155" r="7" fill="#31D8A4"/>
+              <circle cx="690" cy="92" r="7" fill="#31D8A4"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="strip">
+      <div class="container strip-grid">
+        <article class="strip-card">
+          <h3>Live Line Monitoring</h3>
+          <p>See performance changes as boards move through production.</p>
+        </article>
+        <article class="strip-card">
+          <h3>Historical Review</h3>
+          <p>Compare previous-day runs and identify repeating slowdowns.</p>
+        </article>
+        <article class="strip-card">
+          <h3>Yield and Scrap Insight</h3>
+          <p>Understand loss drivers and where corrective action matters most.</p>
+        </article>
+        <article class="strip-card">
+          <h3>Audit Support</h3>
+          <p>Present structured operational metrics clearly and quickly.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Products</p>
+          <h2>Two focused tools for PCBA performance and quality analysis</h2>
+          <p>One tool provides runtime visibility. The other provides rejection and root cause insight.</p>
+        </div>
+
+        <div class="two-grid">
+          <article class="card">
+            <div class="visual">
+              <svg viewBox="0 0 760 420" aria-label="Proline Graphs image">
+                <rect width="760" height="420" rx="20" fill="#091523"/>
+                <rect x="24" y="24" width="150" height="372" rx="16" fill="#0D1E34"/>
+                <rect x="198" y="24" width="538" height="100" rx="16" fill="#0D1E34"/>
+                <rect x="198" y="146" width="538" height="250" rx="16" fill="#0D1E34"/>
+                <polyline points="230,330 290,315 350,280 410,255 470,228 530,190 590,170 650,134 704,112"
+                  fill="none" stroke="#34C6FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="230,346 290,338 350,318 410,296 470,275 530,250 590,224 650,202 704,178"
+                  fill="none" stroke="#7284FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.82"/>
+              </svg>
+            </div>
+            <h3>Proline Graphs</h3>
+            <p>A live and historical graphing tool that shows real-time performance of all PCBA lines and board runtime.</p>
+            <ul class="feature-list">
+              <li>Real-time line performance monitoring</li>
+              <li>Board-by-board runtime tracking</li>
+              <li>Live graph of board run times</li>
+              <li>Historical review of previous runs</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="visual">
+              <svg viewBox="0 0 760 420" aria-label="Proline Analytics image">
+                <rect width="760" height="420" rx="20" fill="#091523"/>
+                <rect x="24" y="24" width="712" height="92" rx="16" fill="#0D1E34"/>
+                <rect x="24" y="138" width="300" height="258" rx="16" fill="#0D1E34"/>
+                <rect x="346" y="138" width="390" height="122" rx="16" fill="#0D1E34"/>
+                <rect x="346" y="274" width="390" height="122" rx="16" fill="#0D1E34"/>
+                <circle cx="174" cy="267" r="72" fill="#11243C"/>
+                <circle cx="174" cy="267" r="72" stroke="#34C6FF" stroke-width="24" stroke-dasharray="160 320" transform="rotate(-90 174 267)"/>
+                <circle cx="174" cy="267" r="72" stroke="#31D8A4" stroke-width="24" stroke-dasharray="88 392" stroke-dashoffset="-170" transform="rotate(-90 174 267)"/>
+                <rect x="380" y="170" width="320" height="22" rx="11" fill="#11243C"/>
+                <rect x="380" y="170" width="210" height="22" rx="11" fill="#FF8578"/>
+                <rect x="380" y="206" width="320" height="22" rx="11" fill="#11243C"/>
+                <rect x="380" y="206" width="170" height="22" rx="11" fill="#34C6FF"/>
+              </svg>
+            </div>
+            <h3>Proline Analytics</h3>
+            <p>An analytics tool for component rejection rate, rejection cost, repeated locations, root causes, and recovery opportunities.</p>
+            <ul class="feature-list">
+              <li>Component rejection rate tracking</li>
+              <li>Rejection cost visibility</li>
+              <li>Repeated location analysis</li>
+              <li>Root cause analysis</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="benefits">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Benefits</p>
+          <h2>Built to help teams find what to fix, faster</h2>
+        </div>
+
+        <div class="four-grid">
+          <article class="card">
+            <div class="icon">Y</div>
+            <h3>Improve Yield</h3>
+            <p>Highlight patterns that affect quality and output.</p>
+          </article>
+          <article class="card">
+            <div class="icon">S</div>
+            <h3>Reduce Scrap</h3>
+            <p>Show the impact of recurring rejection and loss.</p>
+          </article>
+          <article class="card">
+            <div class="icon">D</div>
+            <h3>Cut Downtime</h3>
+            <p>Use runtime trends to understand where delays build.</p>
+          </article>
+          <article class="card">
+            <div class="icon">A</div>
+            <h3>Support Audits</h3>
+            <p>Present structured manufacturing metrics clearly.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="use-cases">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Use Cases</p>
+          <h2>Useful for engineers, production managers, and quality teams</h2>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <h3>Daily production review</h3>
+            <p>Review runtime trends and compare current performance with previous runs.</p>
+          </article>
+          <article class="timeline-item">
+            <h3>Downtime investigation</h3>
+            <p>Identify likely reasons for slowdowns and interruptions across lines.</p>
+          </article>
+          <article class="timeline-item">
+            <h3>Rejection and cost analysis</h3>
+            <p>See where rejections happen, what they cost, and how often they repeat.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="about">
+      <div class="container about-grid">
+        <div>
+          <p class="eyebrow">About</p>
+          <h2>PCBA-focused software from the UK</h2>
+          <p>
+            Pyline Solutions develops software for displaying and analysing manufacturing
+            information in PCBA environments.
+          </p>
+        </div>
+
+        <aside class="card note">
+          <h3>Images included</h3>
+          <p>
+            The dashboard graphics on this page are embedded SVG images. No separate image files are needed.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container cta-box">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Interested in Pyline Solutions?</h2>
+          <p>For product discussions, demo requests, or enquiries, get in touch.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="mailto:hello@pylinesolutions.co.uk" class="btn">hello@pylinesolutions.co.uk</a>
+          <a href="#top" class="btn alt">Back to Top</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <p>© <span id="year"></span> Pyline Solutions. All rights reserved.</p>
+      <p>Based in the UK • PCBA Metrics Software</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
