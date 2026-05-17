@@ -14,7 +14,9 @@
       --blue: #6e7dff;
       --gold: #f3c969;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
@@ -23,24 +25,46 @@
         radial-gradient(circle at 85% 10%, rgba(110,125,255,.16), transparent 22%),
         linear-gradient(180deg, #07111f 0%, #0a1627 100%);
     }
-    .container { width: min(100% - 40px, 1020px); margin: 0 auto; }
+
+    .container {
+      width: min(100% - 40px, 1020px);
+      margin: 0 auto;
+    }
+
     header {
-      position: sticky; top: 0; z-index: 10;
+      position: sticky;
+      top: 0;
+      z-index: 10;
       background: rgba(7,17,31,.78);
       border-bottom: 1px solid var(--line);
       backdrop-filter: blur(10px);
     }
+
     .nav {
-      min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
+
     .brand { font-weight: 700; }
+
     .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-height: 44px; padding: 0 16px; border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
       background: linear-gradient(135deg, var(--cyan), var(--blue));
-      color: #fff; text-decoration: none; font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
     }
+
     main { padding: 44px 0 64px; }
+
     .panel {
       border: 1px solid var(--line);
       border-radius: 20px;
@@ -48,10 +72,57 @@
       padding: 26px;
       margin-bottom: 18px;
     }
+
     h1 { margin: 0 0 12px; font-size: clamp(2rem, 4.8vw, 3rem); }
     h2 { margin: 0 0 10px; color: var(--gold); font-size: 1.25rem; }
     p, li { color: var(--muted); line-height: 1.75; }
     ul { margin: 8px 0 0 18px; }
+
+    /* Same media presentation style as proline-graphs.html */
+    .media-zone {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      margin-top: 16px;
+    }
+
+    .media-grid {
+      display: grid;
+      gap: 30px;
+      padding: 0 24px;
+    }
+
+    .media-item {
+      margin: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(17,29,49,.98), rgba(10,21,37,.96));
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+    }
+
+    .media-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #050b14;
+    }
+
+    .media-item figcaption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
+    }
+
+    @media (max-width: 768px) {
+      .media-grid { padding: 0 14px; gap: 20px; }
+      .media-item { padding: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -78,7 +149,12 @@
           One challenge in electronics manufacturing is that scrap and spit-out data often exists — but isn’t always easy to analyse in a meaningful way.
           To help improve visibility, I recently developed a production analytics tool focused on:
         </p>
-        <p>🔍 Scrap &amp; spit-out analysis<br>💰 Cost impact tracking<br>📊 Trend identification across production<br>📁 Automated processing of manufacturing data</p>
+        <p>
+          🔍 Scrap &amp; spit-out analysis<br>
+          💰 Cost impact tracking<br>
+          📊 Trend identification across production<br>
+          📁 Automated processing of manufacturing data
+        </p>
 
         <p><strong>Introducing Proline Analytics</strong></p>
         <p>
@@ -118,6 +194,15 @@
         </ul>
       </section>
     </div>
+
+    <section class="media-zone" aria-label="Proline Analytics media gallery">
+      <div class="media-grid">
+        <figure class="media-item">
+          <img src="an.png" alt="Proline Analytics dashboard screenshot" loading="lazy" decoding="async" />
+          <figcaption>Proline Analytics dashboard view</figcaption>
+        </figure>
+      </div>
+    </section>
   </main>
 </body>
 </html>
