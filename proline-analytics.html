@@ -49,10 +49,27 @@
             using advanced production filtering and module-based analytics.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-accent" href="#modules">Explore Modules</a>
             <a class="btn btn-ghost" href="contact.html">Request Free Trial</a>
+            <a class="btn btn-demo" href="https://prolineanalyticsdemo.streamlit.app/" target="_blank" rel="noopener noreferrer">Try Live Demo</a>
           </div>
         </article>
+      </div>
+    </section>
+
+    <section class="section section-tight">
+      <div class="container">
+        <div class="demo-section reveal">
+          <p class="eyebrow accent">Live Demo — No Installation Required</p>
+          <h2>Try Proline Analytics right now</h2>
+          <p class="lead">
+            A fully functional demo with sample production data is live online. Explore all six analytics modules,
+            apply filters, and experience the workflow — no download, no trial request, no commitment.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-demo" href="https://prolineanalyticsdemo.streamlit.app/" target="_blank" rel="noopener noreferrer">Launch Live Demo</a>
+            <a class="btn btn-ghost" href="contact.html">Or Request Free Trial With Your Own Data</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -84,8 +101,7 @@
     <section class="section section-tight">
       <div class="container">
         <figure class="image-panel reveal media-wide">
-          <img src="an.png" alt="Proline Analytics dashboard overview" loading="eager" decoding="async" />
-          <figcaption class="image-caption">Dashboard overview with filters, module cards, and reject cost visibility.</figcaption>
+          <img src="selection.png" alt="Proline Analytics selection interface" loading="eager" decoding="async" />
         </figure>
       </div>
     </section>
@@ -95,92 +111,46 @@
         <div class="section-head reveal">
           <p class="eyebrow accent">Analytics Modules</p>
           <h2>Module-based analysis built for action</h2>
-          <p class="lead">The software is built around four primary modules that cover overview analytics, placement performance, full event traceability, and recurring PCB failure patterns.</p>
+          <p class="lead">Six focused modules covering KPI overview, placement performance, full event traceability, recurring failure patterns, period comparison, and reject hotspot mapping.</p>
         </div>
 
-        <div class="grid-4">
+        <div class="grid-3">
           <article class="stat-card reveal">
-            <h4>1. Summary</h4>
-            <p>View rejected components, reject quantities, reject classifications, machine usage, unit component cost, and total reject cost per component.</p>
-          </article>
-          <article class="stat-card reveal">
-            <h4>2. Successful Placements</h4>
-            <p>Analyse successfully placed components, placement quantities, board-level placement statistics, component value, and total successful placement cost.</p>
+            <h4>Summary</h4>
+            <p>KPI cards for high-level visibility of reject totals, cost impact, and machine usage. Includes a corrective action monitor — select any component and track its spitout rate over time to verify if fixes are working.</p>
           </article>
           <article class="stat-card reveal">
-            <h4>3. Individual Spit Events</h4>
-            <p>Track every reject and spit event with complete context so engineers can investigate exact production events and costs.</p>
+            <h4>Successful Placements</h4>
+            <p>Analyse successfully placed components with placement quantities, board-level statistics, and component value. Includes spit-to-success ratio per component for a clear view of placement health.</p>
           </article>
           <article class="stat-card reveal">
-            <h4>4. Repeated Locations</h4>
-            <p>Identify recurring reject locations and repeated placement failures on the PCB to support root-cause investigation.</p>
+            <h4>Individual Spit Events</h4>
+            <p>Full traceability for every reject and spit event — component description, PCB location, trolley and feeder slot, board name, MO, machine, date, timestamp, reject reason, and cost.</p>
           </article>
         </div>
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head reveal">
-          <p class="eyebrow">Summary and Placements</p>
-          <h2>See reject loss and placement value clearly</h2>
-          <p class="lead">The Summary and Successful Placements modules give production and engineering teams immediate visibility into reject causes, value loss, throughput, and material utilisation.</p>
-        </div>
+        <figure class="image-panel reveal media-wide" style="margin: 44px 0;">
+          <img src="an.png" alt="Proline Analytics dashboard overview" loading="lazy" decoding="async" />
+        </figure>
 
-        <div class="grid-2">
-          <article class="card reveal">
-            <h3>Summary module</h3>
-            <p class="lead">If a component has been rejected 20 times, the software can show whether those rejects came from Vision Fail, Electrical Test Fail, Pickup Fail, Lost After Pickup, or any other machine reject category.</p>
-            <div class="chips">
-              <span>Reject cost percentage of total placement value</span>
-              <span>Cumulative reject contribution percentage</span>
-              <span>High-cost reject contributors</span>
-            </div>
+        <div class="grid-3">
+          <article class="stat-card reveal">
+            <h4>Repeated Locations</h4>
+            <p>Identify recurring reject positions and repeated placement failures on the PCB to isolate persistent issues and support faster root-cause investigation.</p>
           </article>
-
-          <article class="card reveal">
-            <h3>Successful placements module</h3>
-            <p class="lead">Review successfully placed components, placement quantities, board-level placement statistics, component value, and total successful placement cost for the selected filters.</p>
-            <div class="chips">
-              <span>Total placement cost visibility</span>
-              <span>Overall throughput insight</span>
-              <span>Material utilisation tracking</span>
-            </div>
+          <article class="stat-card reveal">
+            <h4>Period Comparison</h4>
+            <p>Compare two date and time periods side by side for any run. View spitout comparison, cost comparison, loss per board comparison, and overlaid spit timeline graphs for both periods.</p>
+          </article>
+          <article class="stat-card reveal">
+            <h4>Heatmap of Trolleys & Slots</h4>
+            <p>Visual reject hotspot mapping across machine trolleys and feeder slots. Toggle between Reject Count and Cost Impact modes, hover for feeder number, slot number, spit count, reject cost, and top component details.</p>
           </article>
         </div>
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head reveal">
-          <p class="eyebrow accent">Traceability and Root Cause</p>
-          <h2>Investigate every event in detail</h2>
-          <p class="lead">Individual event traceability and repeated location analysis help process engineers isolate persistent problems and investigate them faster.</p>
-        </div>
-
-        <div class="grid-2">
-          <article class="card reveal">
-            <h3>Individual Spit Events module</h3>
-            <p class="lead">This module provides full traceability for every reject and spit event across the selected production period.</p>
-            <div class="chips">
-              <span>Component description and PCB location</span>
-              <span>Trolley and feeder slot</span>
-              <span>Board name, MO, and machine</span>
-              <span>Date, timestamp, reject reason, and reject cost</span>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <h3>Repeated Locations module</h3>
-            <p class="lead">Identify recurring reject positions and repeated placement failures on the PCB so persistent issues can be isolated and investigated more effectively.</p>
-            <div class="chips">
-              <span>Recurring PCB location failures</span>
-              <span>Repeated placement problem tracking</span>
-              <span>Faster root-cause investigation</span>
-            </div>
-          </article>
-        </div>
+        <figure class="image-panel reveal media-wide" style="margin: 44px 0;">
+          <img src="comparison.png" alt="Proline Analytics period comparison" loading="lazy" decoding="async" />
+        </figure>
       </div>
     </section>
 
