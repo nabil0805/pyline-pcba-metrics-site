@@ -188,6 +188,106 @@ a {
     background: rgba(78, 167, 255, 0.1);
 }
 
+.btn-demo {
+    color: #032118;
+    background: linear-gradient(135deg, #2ccf9b, #5ce6b8);
+    box-shadow: 0 14px 32px rgba(44, 207, 155, 0.3);
+    position: relative;
+    overflow: visible;
+}
+
+.btn-demo::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2ccf9b;
+    box-shadow: 0 0 0 4px rgba(44, 207, 155, 0.3);
+    animation: demo-pulse 2s ease-in-out infinite;
+}
+
+.btn-demo:hover {
+    box-shadow: 0 18px 40px rgba(44, 207, 155, 0.38);
+}
+
+@keyframes demo-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 4px rgba(44, 207, 155, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(44, 207, 155, 0.08);
+    }
+}
+
+.demo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(44, 207, 155, 0.35);
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #2ccf9b;
+    background: rgba(44, 207, 155, 0.08);
+    transition: all 0.25s ease;
+}
+
+.demo-chip::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2ccf9b;
+    box-shadow: 0 0 0 3px rgba(44, 207, 155, 0.28);
+    animation: demo-pulse 2s ease-in-out infinite;
+}
+
+.demo-chip:hover {
+    border-color: rgba(44, 207, 155, 0.55);
+    background: rgba(44, 207, 155, 0.15);
+    color: #5ce6b8;
+}
+
+.demo-section {
+    border: 1px solid rgba(44, 207, 155, 0.22);
+    border-radius: 22px;
+    padding: 36px 32px;
+    background: linear-gradient(135deg, rgba(44, 207, 155, 0.06), rgba(44, 207, 155, 0.02));
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.26);
+    text-align: center;
+}
+
+.demo-section .lead {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 62ch;
+}
+
+.demo-section .hero-actions {
+    justify-content: center;
+}
+
+.demo-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #5ce6b8;
+    transition: color 0.25s ease, filter 0.25s ease;
+}
+
+.demo-inline:hover {
+    color: #86f4d3;
+    filter: brightness(1.15);
+}
+
 .page {
     padding-top: 86px;
 }
